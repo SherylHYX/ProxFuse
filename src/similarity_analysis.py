@@ -7,9 +7,9 @@ start_year = 1998
 end_year = 2022
 months_per_year = 12
 year_of_split = 2018
-array_save_name_list = ['full', 'grooming']
+array_save_name_list = ['full']
 frequency_list = ['yearly']
-graph_type_list = ['learned', 'unlearned', 'binary'] # suggested to use 'learned' for the analysis
+graph_type_list = ['learned'] # ['learned', 'unlearned', 'binary']
 
 name_str = list(np.load('../data/chimps_names.npy'))
 name_str_focal = list(np.load('../data/chimps_names_focal.npy'))

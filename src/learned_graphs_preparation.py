@@ -58,11 +58,3 @@ for year in range(1998, 2023):
                 __file__)), '../data/graphs_without_hardcoded_parameters/'+edge_key+'_consec_array_'+str(year)+'_'+str(month)+'.npy'))
             full_array += graph_weight * (curr_adj + consec_addition_parameter * curr_consec_adj)
         np.save('../data/learned_graphs/full_array_'+str(year)+'_'+str(month), full_array)
-        # specifically grooming
-        curr_adj = np.load(os.path.join(os.path.dirname(os.path.realpath(
-                __file__)), '../data/graphs_without_hardcoded_parameters/grooming_array_'+str(year)+'_'+str(month)+'.npy'))
-        # consec addition to be added
-        curr_consec_adj = np.load(os.path.join(os.path.dirname(os.path.realpath(
-            __file__)), '../data/graphs_without_hardcoded_parameters/grooming_consec_array_'+str(year)+'_'+str(month)+'.npy'))
-        full_array = curr_adj + consec_addition_parameter * curr_consec_adj      
-        np.save('../data/learned_graphs/grooming_array_'+str(year)+'_'+str(month), full_array)

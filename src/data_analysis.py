@@ -13,11 +13,10 @@ end_year = 2022
 months_per_year = 12
 name_str = list(np.load('../data/chimps_names.npy'))
 num_chimps = len(name_str)
-array_save_name_list = ['full', 'grooming']
+array_save_name_list = ['full']
 graph_type_list = ['learned', 'unlearned', 'binary']
 
 # plotting based on frequencies
-marker_dict = {'full':'v', 'grooming':'p'}
 dates = pd.date_range(start=str(start_year), end=str(end_year), freq='YS')
 plot_types = ['average_weighted_degree', 'average_clustering_coefficient', 'average_close_centrality']
 for plot_type in plot_types:
@@ -55,12 +54,13 @@ for plot_type in plot_types:
 
             # Create the plot
             label_name = array_save_name+'_'+graph_type
-            plt.plot(df['Date'], df['Value'], marker=marker_dict[array_save_name], label=label_name, alpha=0.7)
+            plt.plot(df['Date'], df['Value'], alpha=0.7)
 
     # Formatting the x-axis
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     plt.gca().xaxis.set_major_locator(mdates.YearLocator())
-    plt.xticks(rotation=45)
+    plt.xticks(rotation=45, fontsize=20)
+    plt.yticks(fontsize=20)
     plt.legend()
     plt.tight_layout()
 
