@@ -117,7 +117,7 @@ for array_save_name in array_save_name_list:
 
                 best_partition = None
                 best_modularity = -10000
-                for _ in range(20): # run 20 times and take the best partition
+                for _ in range(100): # run 100 times and take the best partition
                     # Apply the Leiden algorithm using the specified weights
                     partition = leidenalg.find_partition(ig_G, partition_type=leidenalg.RBConfigurationVertexPartition, weights='weight')
 
@@ -139,7 +139,7 @@ for array_save_name in array_save_name_list:
                 # for binary graphs
                 best_partition = None
                 best_modularity = -np.inf
-                for _ in range(20): # run 20 times and take the best partition
+                for _ in range(100): # run 100 times and take the best partition
                     # Apply the Leiden algorithm using the specified weights
                     partition = leidenalg.find_partition(ig_G, partition_type=leidenalg.RBConfigurationVertexPartition, weights=None)
 

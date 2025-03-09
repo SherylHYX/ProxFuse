@@ -69,11 +69,11 @@ def compute_similarity_measures(community_identities_all):
 def common_community_similarity_analysis(array_save_name, frequency, graph_type='learned'):
     analysis_name = frequency + '_' + array_save_name + '_' + graph_type
     if graph_type == 'unlearned':
-        file_path = '../unanalysis_raw_data/' + analysis_name + '/community_identities.npy'
-    else:
         file_path = '../analysis_raw_data/' + analysis_name + '/community_identities.npy'
-    if graph_type == 'binary':
-        file_path = file_path.replace('community_identities', 'community_identities_binary')
+    elif graph_type == 'learned':
+        file_path = '../analysis_raw_data/' + analysis_name + '/community_identities.npy'
+    else: # binary
+        file_path = '../analysis_raw_data/' + frequency + '_' + array_save_name + '_learned/community_identities_binary.npy'
     community_identities_all = np.load(file_path)
     valid_mask = ~np.any(np.isnan(community_identities_all), axis=1)
     # then extract those communities
@@ -209,11 +209,11 @@ def compute_similariity_distribution_mean_std(valid_community_identities_ij_all)
 def similarity_p_value_analysis(array_save_name, frequency, graph_type='learned'):
     analysis_name = frequency + '_' + array_save_name + '_' + graph_type
     if graph_type == 'unlearned':
-        file_path = '../unanalysis_raw_data/' + analysis_name + '/community_identities.npy'
-    else:
         file_path = '../analysis_raw_data/' + analysis_name + '/community_identities.npy'
-    if graph_type == 'binary':
-        file_path = file_path.replace('community_identities', 'community_identities_binary')
+    elif graph_type == 'learned':
+        file_path = '../analysis_raw_data/' + analysis_name + '/community_identities.npy'
+    else: # binary
+        file_path = '../analysis_raw_data/' + frequency + '_' + array_save_name + '_learned/community_identities_binary.npy'
     community_identities_all = np.load(file_path)
     num_nodes = community_identities_all.shape[1]
     longest_p_value_matrix = np.ones((num_nodes, num_nodes))
@@ -308,6 +308,9 @@ def filter_subsets(cliques):
     return filtered_cliques
 
 def common_community_similarity_outstanding_analysis(array_save_name, frequency, graph_type='learned', significance_level=0.05):
+    df = pd.read_excel('../data/names_and_indices.xlsx')
+    # Create a dictionary mapping indices to names
+    index_to_name = dict(zip(df["Index"], df["Name"]))
     # for individual pairs with normalized value more than 2, for a hypothesis testing
     analysis_name = frequency + '_' + array_save_name + '_' + graph_type
 
@@ -363,9 +366,9 @@ def common_community_similarity_outstanding_analysis(array_save_name, frequency,
             f.write("Number of unique cliques after removing subsets:"+str(len(filtered_cliques)))
             f.write("\nSome of the unique cliques (not subsets of larger cliques):\n")
         for clique in filtered_cliques:
-            print(clique)
+            print([index_to_name[i] for i in clique])
             with open(filename, 'a') as f:
-                f.write(str(clique))
+                f.write(str([index_to_name[i] for i in clique]))
                 f.write('\n')
 
     print('*'*30)
