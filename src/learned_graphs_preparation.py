@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 
-data = pd.read_csv('../data/mitani_male_behav_data_29.12.2022.csv')
+data = pd.read_csv('../data/male_behav_data_20250310.csv')
 data['date'] = pd.to_datetime(data['date'], infer_datetime_format=True)
 
 # define some constants, unlearned weights with same 0.1 added values

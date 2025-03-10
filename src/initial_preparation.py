@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 IsRegenerate = False # parameter to regenerate data
-data = pd.read_csv('../data/male_behav_data_18.1.2025.csv')
+data = pd.read_csv('../data/male_behav_data_20250310.csv')
 data['date'] = pd.to_datetime(data['date'], infer_datetime_format=True)
 
 # define some constants

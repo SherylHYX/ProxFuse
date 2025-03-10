@@ -1,5 +1,6 @@
 import numpy as np
 import networkx as nx
+import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -9,7 +10,7 @@ months_per_year = 12
 year_of_split = 2018
 array_save_name_list = ['full']
 frequency_list = ['yearly']
-graph_type_list = ['learned'] # ['learned', 'unlearned', 'binary']
+graph_type_list = ['learned', 'unlearned', 'binary']
 
 name_str = list(np.load('../data/chimps_names.npy'))
 name_str_focal = list(np.load('../data/chimps_names_focal.npy'))
@@ -69,11 +70,11 @@ def compute_similarity_measures(community_identities_all):
 def common_community_similarity_analysis(array_save_name, frequency, graph_type='learned'):
     analysis_name = frequency + '_' + array_save_name + '_' + graph_type
     if graph_type == 'unlearned':
-        file_path = '../analysis_raw_data/' + analysis_name + '/community_identities.npy'
+        file_path = '../unlearned_analysis_raw_data/' + frequency + '_' + array_save_name + '/community_identities.npy'
     elif graph_type == 'learned':
-        file_path = '../analysis_raw_data/' + analysis_name + '/community_identities.npy'
+        file_path = '../learned_analysis_raw_data/' + frequency + '_' + array_save_name + '/community_identities.npy'
     else: # binary
-        file_path = '../analysis_raw_data/' + frequency + '_' + array_save_name + '_learned/community_identities_binary.npy'
+        file_path = '../learned_analysis_raw_data/' + frequency + '_' + array_save_name + '/community_identities_binary.npy'
     community_identities_all = np.load(file_path)
     valid_mask = ~np.any(np.isnan(community_identities_all), axis=1)
     # then extract those communities
@@ -209,11 +210,11 @@ def compute_similariity_distribution_mean_std(valid_community_identities_ij_all)
 def similarity_p_value_analysis(array_save_name, frequency, graph_type='learned'):
     analysis_name = frequency + '_' + array_save_name + '_' + graph_type
     if graph_type == 'unlearned':
-        file_path = '../analysis_raw_data/' + analysis_name + '/community_identities.npy'
+        file_path = '../unlearned_analysis_raw_data/' + frequency + '_' + array_save_name + '/community_identities.npy'
     elif graph_type == 'learned':
-        file_path = '../analysis_raw_data/' + analysis_name + '/community_identities.npy'
+        file_path = '../learned_analysis_raw_data/' + frequency + '_' + array_save_name + '/community_identities.npy'
     else: # binary
-        file_path = '../analysis_raw_data/' + frequency + '_' + array_save_name + '_learned/community_identities_binary.npy'
+        file_path = '../learned_analysis_raw_data/' + frequency + '_' + array_save_name + '/community_identities_binary.npy'    
     community_identities_all = np.load(file_path)
     num_nodes = community_identities_all.shape[1]
     longest_p_value_matrix = np.ones((num_nodes, num_nodes))
@@ -366,10 +367,11 @@ def common_community_similarity_outstanding_analysis(array_save_name, frequency,
             f.write("Number of unique cliques after removing subsets:"+str(len(filtered_cliques)))
             f.write("\nSome of the unique cliques (not subsets of larger cliques):\n")
         for clique in filtered_cliques:
-            print([index_to_name[i] for i in clique])
+            formatted_clique = f"[{', '.join(index_to_name[i] for i in clique)}]"
+            print(formatted_clique)
             with open(filename, 'a') as f:
-                f.write(str([index_to_name[i] for i in clique]))
-                f.write('\n')
+                f.write(formatted_clique + '\n')
+
 
     print('*'*30)
     with open(filename, 'a') as f:

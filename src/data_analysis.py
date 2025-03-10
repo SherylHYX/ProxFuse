@@ -117,9 +117,9 @@ for array_save_name in array_save_name_list:
 
                 best_partition = None
                 best_modularity = -10000
-                for _ in range(100): # run 100 times and take the best partition
+                for leiden_seed in range(100): # run 100 times and take the best partition
                     # Apply the Leiden algorithm using the specified weights
-                    partition = leidenalg.find_partition(ig_G, partition_type=leidenalg.RBConfigurationVertexPartition, weights='weight')
+                    partition = leidenalg.find_partition(ig_G, partition_type=leidenalg.RBConfigurationVertexPartition, weights='weight', seed=leiden_seed)
 
                     # modularity
                     modularity_val = partition.modularity
